@@ -4,3 +4,5 @@ CREATE TABLE IF NOT EXISTS users (
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL
 );
+
+ALTER TABLE users OWNER TO myuser;

@@ -1,0 +1,33 @@
+- name: Setup PostgreSQL scripts
+  hosts: all
+  become: true
+
+
+  tasks:
+    # Switch local PostgreSQL authentication from peer (OS user) to md5 (password-based) 
+    - name: Find and replace "peer" with "md5" in pg_hba.conf
+      replace:
+        path: /etc/postgresql/15/main/pg_hba.conf
+        regexp: '^local\s+all\s+all\s+peer'
+        replace: 'local   all             all                                     md5'
+        backup: yes
+
+    - name: Restart PostgreSQL
+      service:
+        name: postgresql
+        state: restarted
+
+    - name: Create /home/postgres folder and copy SQL files
+      shell: |
+        cd /home && \
+        mkdir -p postgres && \
+        cp /vagrant/data/*.sql /home/postgres
+      args:
+        executable: /bin/bash
+
+    - name: Create PostgreSQL tables and insert users
+      shell: |
+        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users-table.sql && \
+        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users.sql
+      args:
+        executable: /bin/bash

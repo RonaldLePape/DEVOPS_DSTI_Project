@@ -50,6 +50,19 @@
         name: postgresql-15
         state: present
 
+# Switch local PostgreSQL authentication from peer (OS user) to md5 (password-based) 
+    - name: Find and replace "peer" with "md5" in pg_hba.conf
+      replace:
+        path: /etc/postgresql/15/main/pg_hba.conf
+        regexp: '^local\s+all\s+all\s+peer'
+        replace: 'local   all             all                                     md5'
+        backup: yes
+
+    - name: Restart PostgreSQL
+      service:
+        name: postgresql
+        state: restarted
+
 # Creating a Postgres user with an SQL command
     - name: Manually create PostgreSQL user (shell workaround)
       become: true
@@ -64,3 +77,27 @@
         sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='{{ db_name }}'" | grep -q 1 || \
         sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
 
+# Executing SQL commands
+    - name: Create /home/postgres folder and copy SQL files
+      shell: |
+        cd /home && \
+        mkdir -p postgres && \
+        cp /vagrant/data/*.sql /home/postgres
+      args:
+        executable: /bin/bash
+
+    - name: Create PostgreSQL tables and insert users
+      shell: |
+        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users-table.sql && \
+        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users.sql
+      args:
+        executable: /bin/bash
+
+# Creating /home/myapp directory and copying app files from /vagrant/data
+    - name: Create /home/postgres folder and copy SQL files
+      shell: |
+        cd /home && \
+        mkdir -p myapp && \
+        cp -r /vagrant/data/app/* /home/myapp
+      args:
+        executable: /bin/bash
