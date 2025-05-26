@@ -101,3 +101,12 @@
         cp -r /vagrant/data/app/* /home/myapp
       args:
         executable: /bin/bash
+
+# Installing docker
+    - name: Instal Docker
+      shell: |
+        sudo apt install -y docker.io && \
+        mkdir -p myapp && \
+        sudo systemctl enable --now docker
+      args:
+        executable: /bin/bash
