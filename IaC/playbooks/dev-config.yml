@@ -51,6 +51,7 @@
         state: present
 
 # Switch local PostgreSQL authentication from peer (OS user) to md5 (password-based) 
+# Why : to be accessible from a non-linux user (myuser exists only in postgres)
     - name: Find and replace "peer" with "md5" in pg_hba.conf
       replace:
         path: /etc/postgresql/15/main/pg_hba.conf
@@ -77,7 +78,7 @@
         sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='{{ db_name }}'" | grep -q 1 || \
         sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
 
-# Executing SQL commands
+# Executing SQL commands : creating users table, adding data rows to users
     - name: Create /home/postgres folder and copy SQL files
       shell: |
         cd /home && \

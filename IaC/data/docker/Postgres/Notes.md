@@ -1,16 +1,4 @@
-# Useful Docker commands
-
-## Building Posgres image: (from the folder containing Dockerfile)
-  sudo docker build -t postgres-15 .
-
-## Starting Postgres container:
-  sudo docker run -d --name mypg -p 5433:5432 postgres-15
-
-## Accessing Postgres database from host :
-  sudo docker exec -it mypg psql -U myuser -d myproject_db
-
-
-# Installing docker-compose from web repo (not installed with docker on ubuntu)
+# Installing docker-compose from web repo (not installed with docker on ubuntu):
 
     1. Install prerequisites
     sudo apt-get update
@@ -38,6 +26,25 @@
     6. (Optional) Verify it's working
     docker compose version
 
-## Using docker compose from directory containing dockerfile and docker-compose.yml)
+
+# Useful Docker commands:
+
+## Building Posgres image: (from the folder containing Dockerfile)
+
+  sudo docker build -t postgres-15 .
+
+## Starting Postgres container:
+
+  sudo docker run -d --name mypg -p 5433:5432 postgres-15
+
+## Using docker compose from directory containing docker-compose.yml
 
   sudo docker compose up -d
+
+## Accessing Postgres database from host :
+  sudo docker exec -it mypg psql -U myuser -d myproject_db
+
+
+# Other notes:
+
+  sql files are named 01** 02*** : sql init takes sql files in alphanumeric order 

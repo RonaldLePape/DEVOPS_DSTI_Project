@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: ./postgres
+    container_name: mypg
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  nodejs:
+    build:
+      context: ./nodejs
+    container_name: mynodeapp
+    ports:
+      - "3001:3000"  # Host:Container
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+

@@ -1,4 +1,0 @@
-psql -U myuser -d myproject_db -f init-users-table.sql
-psql -U myuser -d myproject_db -f init-users.sql
-
-

@@ -1,3 +1,5 @@
+
+
 # Notes about Iac
 
 Ansible playbooks can be manually executed from VM :
