@@ -1,0 +1,31 @@
+- name: Setup PostgreSQL scripts
+  hosts: all
+  become: true
+
+
+  tasks:
+
+    - name: Create PostgreSQL tables and insert users
+      shell: |
+        sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/01-init-users-table.sql && \
+        sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/02-init-users.sql
+      args:
+        executable: /bin/bash
+
+## Creating /home/myapp directory and copying app files from /vagrant/data
+#   - name: Create /home/postgres folder and copy SQL files
+#      shell: |
+#        cd /home && \
+#        mkdir -p myapp && \
+#        cp -r /vagrant/data/app/* /home/myapp
+#      args:
+#        executable: /bin/bash
+
+# Installing docker
+    - name: Instal Docker
+      shell: |
+        sudo apt install -y docker.io && \
+        mkdir -p myapp && \
+        sudo systemctl enable --now docker
+      args:
+        executable: /bin/bash

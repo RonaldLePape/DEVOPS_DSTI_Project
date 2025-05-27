@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ./app/package*.json ./
 RUN npm install
 
-COPY ./app ./app
+COPY ./app .
 
 # Expose the port your app runs on
 EXPOSE 3001

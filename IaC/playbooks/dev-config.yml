@@ -79,35 +79,59 @@
         sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
 
 # Executing SQL commands : creating users table, adding data rows to users
-    - name: Create /home/postgres folder and copy SQL files
-      shell: |
-        cd /home && \
-        mkdir -p postgres && \
-        cp /vagrant/data/*.sql /home/postgres
-      args:
-        executable: /bin/bash
 
     - name: Create PostgreSQL tables and insert users
       shell: |
-        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users-table.sql && \
-        sudo -u postgres psql -d myproject_db -f /home/postgres/init-users.sql
+        sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/01-init-users-table.sql && \
+        sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/02-init-users.sql
       args:
         executable: /bin/bash
 
-# Creating /home/myapp directory and copying app files from /vagrant/data
-    - name: Create /home/postgres folder and copy SQL files
-      shell: |
-        cd /home && \
-        mkdir -p myapp && \
-        cp -r /vagrant/data/app/* /home/myapp
-      args:
-        executable: /bin/bash
+## Creating /home/myapp directory and copying app files from /vagrant/data
+#   - name: Create /home/postgres folder and copy SQL files
+#      shell: |
+#        cd /home && \
+#        mkdir -p myapp && \
+#        cp -r /vagrant/data/app/* /home/myapp
+#      args:
+#        executable: /bin/bash
 
-# Installing docker
+# Installing Docker
     - name: Instal Docker
       shell: |
         sudo apt install -y docker.io && \
         mkdir -p myapp && \
         sudo systemctl enable --now docker
+      args:
+        executable: /bin/bash
+
+# Installing Docker Compose "manually" (Compose not present in apt Docker package)
+    - name: Install Docker Compose
+      shell: |
+        sudo apt-get update && \
+        sudo apt-get install -y ca-certificates curl gnupg lsb-release && \
+        sudo install -m 0755 -d /etc/apt/keyrings && \
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+        sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+        echo \
+        "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/etc/apt/keyrings/docker.gpg] \
+        https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+        sudo apt-get update && \
+        sudo apt-get install -y docker-compose-plugin
+      args:
+        executable: /bin/bash
+
+# Copying UserApi from shared folder () t o non-shared folder ("npm install" fails to create symlinks on shared folders)
+# Lauching "npm install"
+    - name: Copy UserApi in /home/userapi
+      shell: |
+        cd /home && \
+        mkdir -p userapi && \
+        sudo cp -r /home/dsti_project/UserApi/app/* /home/userapi  && \
+        cd /home/userapi && \
+        npm install
       args:
         executable: /bin/bash

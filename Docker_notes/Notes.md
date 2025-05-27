@@ -41,8 +41,15 @@
 
   sudo docker compose up -d
 
-## Accessing Postgres database from host :
+## Accessing Postgres database from host:
   sudo docker exec -it mypg psql -U myuser -d myproject_db
+
+## Manually executing sql files:
+  psql -U myuser -d myproject_db -f 01-init-users-table.sql
+  psql -U myuser -d myproject_db -f 02-init-users.sql
+
+
+
 
 
 # Other notes:
