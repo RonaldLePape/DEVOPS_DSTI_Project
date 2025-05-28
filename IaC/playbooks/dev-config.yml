@@ -87,17 +87,8 @@
       args:
         executable: /bin/bash
 
-## Creating /home/myapp directory and copying app files from /vagrant/data
-#   - name: Create /home/postgres folder and copy SQL files
-#      shell: |
-#        cd /home && \
-#        mkdir -p myapp && \
-#        cp -r /vagrant/data/app/* /home/myapp
-#      args:
-#        executable: /bin/bash
-
 # Installing Docker
-    - name: Instal Docker
+    - name: Install Docker
       shell: |
         sudo apt install -y docker.io && \
         mkdir -p myapp && \
@@ -124,14 +115,77 @@
       args:
         executable: /bin/bash
 
-# Copying UserApi from shared folder () t o non-shared folder ("npm install" fails to create symlinks on shared folders)
-# Lauching "npm install"
-    - name: Copy UserApi in /home/userapi
+# Copying UserApi to /home/userapi (where "postgres" -> "localhost" in config in next step)
+# "npm install" will create folder node_modules in a non shared folder ("npm install" fails to create symlinks on shared volumes)
+# -> Lauching "npm install" with --prefix /home/node_tmp
+    - name: Copy UserApi in /home/userapi and "npm install"
       shell: |
         cd /home && \
-        mkdir -p userapi && \
+        sudo mkdir node_tmp && \
         sudo cp -r /home/dsti_project/UserApi/app/* /home/userapi  && \
+        sudo cp -r /home/dsti_project/UserApi/app/package.json /home/node_tmp  && \        
         cd /home/userapi && \
-        npm install
+        sudo npm install --prefix /home/node_tmp
       args:
         executable: /bin/bash
+
+# In the previously copied UserApi, the database server name "postgres" (OK for Docker Compose) must be changed to "localhost" (OK for non-Docker)
+# 2 files impacted:
+    - name: Find and replace "postgres" with "localhost" in default.json
+      replace:
+        path: /home/userapi/conf/default.json
+        regexp: 'postgres'
+        replace: 'localhost'
+        backup: no
+
+    - name: Find and replace "postgres" with "localhost" in dbClient.js
+      replace:
+        path: /home/userapi/src/dbClient.js
+        regexp: 'postgres'
+        replace: 'localhost'
+        backup: no
+
+# Creating a "myapp-start" script to start the app easily :-)
+# The NODE_PATH tells Node where to look for node_modules directory
+    - name: Create myapp-start script
+      shell: |
+        cat << 'EOF' | sudo tee /usr/local/bin/myapp-start > /dev/null
+        #!/bin/bash
+        export NODE_PATH=/home/node_tmp/node_modules
+        nohup npm run start --prefix /home/userapi > /tmp/myapp.log 2>&1 &
+        echo $! > /tmp/myapp.pid
+        echo "myapp started in background with PID $(cat /tmp/myapp.pid)"
+        EOF
+
+        sudo chmod +x /usr/local/bin/myapp-start
+      args:
+        executable: /bin/bash
+
+# Creating corresponding "myapp-stop" script to start the app easily :-)
+    - name: Create myapp-stop script
+      shell: |
+        cat << 'EOF' | sudo tee /usr/local/bin/myapp-stop > /dev/null
+        #!/bin/bash
+        if [ -f /tmp/myapp.pid ]; then
+          kill $(cat /tmp/myapp.pid) && echo "myapp stopped"
+          rm /tmp/myapp.pid
+        else
+          echo "No running myapp process found."
+        fi
+        EOF
+
+        sudo chmod +x /usr/local/bin/myapp-stop
+      args:
+        executable: /bin/bash
+
+
+# Launching Docker Compose
+    - name: Lauching Docker compose to start the app containers
+      shell: |
+        cd /home/dsti_project && \
+        sudo docker compose up -d
+      args:
+        executable: /bin/bash
+
+
+
