@@ -1,9 +1,0 @@
-{
-  "postgres": {
-    "host": "postgres",
-    "port": 5432,
-    "user": "myuser",
-    "password": "MySecretPassword123",
-    "database": "myproject_db"
-  }
-}
