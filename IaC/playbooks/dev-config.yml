@@ -134,8 +134,9 @@
     - name: Find and replace "postgres" with "localhost" in default.json
       replace:
         path: /home/userapi/conf/default.json
-        regexp: 'postgres'
-        replace: 'localhost'
+        regexp: '"host": *"postgres"'
+        replace: '"host": "localhost"'
+
         backup: no
 
     - name: Find and replace "postgres" with "localhost" in dbClient.js
@@ -161,26 +162,36 @@
       args:
         executable: /bin/bash
 
-# Creating corresponding "myapp-stop" script to start the app easily :-)
+# Creating corresponding "myapp-stop" script to stop the app easily :-)
     - name: Create myapp-stop script
       shell: |
         cat << 'EOF' | sudo tee /usr/local/bin/myapp-stop > /dev/null
         #!/bin/bash
-        if [ -f /tmp/myapp.pid ]; then
-          kill $(cat /tmp/myapp.pid) && echo "myapp stopped"
-          rm /tmp/myapp.pid
-        else
-          echo "No running myapp process found."
-        fi
+        sudo pkill -u vagrant -f "node.*src"
+        echo "myapp stopped (if running)"
         EOF
 
         sudo chmod +x /usr/local/bin/myapp-stop
       args:
         executable: /bin/bash
 
+# Creating a "myapp-test" script to test the app easily :-)
+- name: Create myapp-test script
+  shell: |
+    cat << 'EOF' | sudo tee /usr/local/bin/myapp-test > /dev/null
+    #!/bin/bash
+    export NODE_PATH=/home/node_tmp/node_modules
+    npm run test --prefix /home/userapi
+    EOF
+
+    sudo chmod +x /usr/local/bin/myapp-test
+  args:
+    executable: /bin/bash
+
+
 
 # Launching Docker Compose
-    - name: Lauching Docker compose to start the app containers
+    - name: Lauching Docker compose => app containers startup !
       shell: |
         cd /home/dsti_project && \
         sudo docker compose up -d

@@ -15,8 +15,8 @@ Vagrant.configure("2") do |config|
   # Giving a friendly name in VirtualBox GUI and managing CPU/RAM
   config.vm.provider "virtualbox" do |vb|
     vb.name = "Ronald's-development-machine"
-    vb.customize ["modifyvm", :id, "--memory", 1024]
-    vb.customize ["modifyvm", :id, "--cpus", 2]
+    vb.customize ["modifyvm", :id, "--memory", 4096]
+    vb.customize ["modifyvm", :id, "--cpus", 4]
   end
 
   # Update package cache before installing anything
