@@ -8,7 +8,7 @@ describe('PostgreSQL', () => {
 
   before(() => {
     db = new Pool({
-      host: config.postgres?.host || 'localhost',
+      host: config.postgres?.host || 'postgres',
       port: config.postgres?.port || 5432,
       user: config.postgres?.user || 'myuser',
       password: config.postgres?.password || 'MySecretPassword123',

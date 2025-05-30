@@ -170,6 +170,30 @@
         replace: 'localhost'
         backup: no
 
+# In packages.json, replace the default test line:
+    - name: Replace test script in package.json
+      replace:
+        path: /home/userapi/package.json
+        regexp: '"test":\s*"mocha test/\*\.js"'
+        replace: '"test": "/home/node_tmp/node_modules/.bin/mocha test/*.js"'
+
+# In test/configure.js, replace the default test line:
+    - name: Replace "configure" test script
+      replace:
+        path: /home/userapi/test/configure.js
+        regexp: 'host:\s*"postgres"'
+        replace: 'host: "localhost"'
+
+# In test/dbClient.js, replace the default test line:
+    - name: Replace "dbClient" test script
+      replace:
+        path: /home/userapi/test/dbClient.js
+        regexp: "host:\\s*config\\.postgres\\?\\..*?\\|\\|\\s*'postgres'"
+        replace: "host: config.postgres?.host || 'localhost'"
+
+
+
+
 # Creating a "myapp-start" script to start the app easily :-)
 # The NODE_PATH tells Node where to look for node_modules directory
     - name: Create myapp-start script
