@@ -28,7 +28,7 @@ test_app:
     - apt-get update && apt-get install -y postgresql-client
     - until pg_isready -h postgres -U $POSTGRES_USER; do echo "Waiting for DB..."; sleep 1; done
     - |
-      psql -h postgres -U $POSTGRES_USER -d $POSTGRES_DB -c "
+      PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres -U $POSTGRES_USER -d $POSTGRES_DB -c "
         CREATE TABLE users (
           id SERIAL PRIMARY KEY,
           username VARCHAR(255) NOT NULL,
