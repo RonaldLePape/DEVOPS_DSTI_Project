@@ -1,5 +1,30 @@
-# Ansible file can be played manually from inside the VM:
-# vagrant@myUbuntu:/vagrant/playbooks$ ansible-playbook dev-config.yml -i localhost, -c local
+#   This Ansible script does: 
+#===========================================================================================
+#       => Installs curl
+#       => Installs Node.JS 20
+#       => Installs Postgres 15
+#       => Sets PostgreSQL authentication from peer (OS user) to md5 (password-based) 
+#       => Creates a Postgres user
+#       => Creates a Postgres database
+#       => Execute SQL scripts (table creation, inserts 3 rows in the table)
+#       => Installs Docker
+#       => Installs Docker Compose
+#       => Copies app in /home/userapi
+#       => Replaces database server name 'postgres' by 'localhost' in default.json and dbClient.js
+#          ('postgres' name is for use in Docker container)
+#       => Creates 3 scripts for local app execution: myapp-start, myapp-stop, myapp-test
+#       => Launches Docker Compose : creates 2 containers (1 for app/Node, 1 for Postgres)
+#===========================================================================================
+#   Networking aspects :
+#       => Local app listens port 3000
+#       => Local Postgres listens port 5432
+#       => Postgres container listens on host port 5433
+#       => App/Node container listens on host port 3001
+#===========================================================================================
+#   Other:
+#       An Ansible file can be played manually from inside the VM:
+#       $ ansible-playbook dev-config.yml -i localhost, -c local
+#===========================================================================================
 
 ---
 - hosts: all
@@ -79,7 +104,6 @@
         sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
 
 # Executing SQL commands : creating users table, adding data rows to users
-
     - name: Create PostgreSQL tables and insert users
       shell: |
         sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/01-init-users-table.sql && \
@@ -176,22 +200,20 @@
         executable: /bin/bash
 
 # Creating a "myapp-test" script to test the app easily :-)
-- name: Create myapp-test script
-  shell: |
-    cat << 'EOF' | sudo tee /usr/local/bin/myapp-test > /dev/null
-    #!/bin/bash
-    export NODE_PATH=/home/node_tmp/node_modules
-    npm run test --prefix /home/userapi
-    EOF
+    - name: Create myapp-test script
+      shell: |
+        cat << 'EOF' | sudo tee /usr/local/bin/myapp-test > /dev/null
+        #!/bin/bash
+        export NODE_PATH=/home/node_tmp/node_modules
+        npm run test --prefix /home/userapi
+        EOF
 
-    sudo chmod +x /usr/local/bin/myapp-test
-  args:
-    executable: /bin/bash
-
-
+        sudo chmod +x /usr/local/bin/myapp-test
+      args:
+        executable: /bin/bash
 
 # Launching Docker Compose
-    - name: Lauching Docker compose => app containers startup !
+    - name: Lauching Docker compose Up => app containers startup !
       shell: |
         cd /home/dsti_project && \
         sudo docker compose up -d

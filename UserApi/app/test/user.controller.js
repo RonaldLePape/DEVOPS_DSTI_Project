@@ -5,7 +5,7 @@ const db = require('../src/dbClient')
 describe('User', () => {
   
     describe('Delete', () => {
-    it('delete the user if it exists', (done) => {
+    it('deletes the test user "sergkudinov" if it exists', (done) => {
       userController.delete('sergkudinov', (err, result) => {
         try {
           // If the user was not found, result will be undefined or null
@@ -33,7 +33,7 @@ describe('User', () => {
 
   describe('Create', () => {
 
-    it('create a new user', (done) => {
+    it('creates a new test user "sergkudinov"', (done) => {
       const user = {
         username: 'sergkudinov',
         firstname: 'Sergei',
@@ -55,7 +55,7 @@ describe('User', () => {
 
     })
 
-    it('passing wrong user parameters', (done) => {
+    it('passes wrong user parameters', (done) => {
       const user = {
         firstname: 'Sergei',
         lastname: 'Kudinov'
@@ -67,7 +67,7 @@ describe('User', () => {
       })
     })
 
-    it('avoid creating an existing user', (done)=> {
+    it('avoids creating an existing user', (done)=> {
       const user = {
         username: 'sergkudinov',
         firstname: 'Sergei',
@@ -88,7 +88,7 @@ describe('User', () => {
   describe('Get', ()=> {
 	  
 
-    it('get a user by username', (done) => {
+    it('gets a test user "sergkudinov" by username', (done) => {
       const user = {
         username: 'sergkudinov',
         firstname: 'Sergei',

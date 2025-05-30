@@ -16,7 +16,7 @@ describe('User REST API', () => {
     /** Deletes any existing user 'sergkudinov' before calling API
      */
     describe('Delete', () => {
-    it('deletes the sergkudinov user if it already exists', (done) => {
+    it('deletes the test user "sergkudinov" if it already exists', (done) => {
       userController.delete('sergkudinov', (err, result) => {
         try {
           // If the user was not found, result will be undefined or null
@@ -43,7 +43,7 @@ describe('User REST API', () => {
 
   describe('POST /user', () => {
 
-    it('create a new user', () => {
+    it('creates a new test user "sergkudinov"', () => {
   	const user = {
     		username: 'sergkudinov',
     		firstname: 'Sergei',
@@ -68,7 +68,7 @@ describe('User REST API', () => {
     });
 
     
-    it('pass wrong parameters', (done) => {
+    it('passes wrong parameters', (done) => {
       const user = {
         firstname: 'Sergei',
         lastname: 'Kudinov'
@@ -90,7 +90,7 @@ describe('User REST API', () => {
 
   describe('GET /user', () => {
     
-    it('get an existing user', (done) => {
+    it('gets an existing test user "sergkudinov"', (done) => {
       const user = {
         username: 'sergkudinov',
         firstname: 'Sergei',
