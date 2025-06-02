@@ -32,7 +32,7 @@ spec:
       persistentVolumeClaim:
         claimName: postgres-pvc
   imagePullSecrets:
-    - name: regcred   # ← Reference your Docker Hub auth secret
+    - name: regcred   # ← Docker Hub auth secret
 ---
 apiVersion: v1
 kind: Service
