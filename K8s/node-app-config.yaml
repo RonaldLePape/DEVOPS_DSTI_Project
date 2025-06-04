@@ -29,8 +29,8 @@ metadata:
 spec:
   selector:
     app: mywebapp
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 80
-      targetPort: 3000
-      nodePort: 30080   # external port
+    - port: 3080          # port in Kubernetes (middle layer)
+      targetPort: 3000  # port in container (inner-most, matches "containerPort: 3000" above)
+      # nodePort: 30080   # port on host (external world) - only when "type: NodePort" in spec: above
