@@ -1,26 +1,22 @@
-default:
-  before_script:
-    - cd UserApi/app
-
 stages:
-  - build
   - test
+  - build
 
+# Variables block below : commented variables have been created as Gitlab CI/CD variables.
 variables:
-  POSTGRES_DB: myproject_db
-  POSTGRES_USER: myuser
-  POSTGRES_PASSWORD: MySecretPassword123
-
-build_app:
-  stage: build
-  image: node:20
-  script:
-    - npm install
-    - npm run build
+#  POSTGRES_DB: db_name
+#  POSTGRES_USER: user_name
+#  POSTGRES_PASSWORD: user_password
+#  REGISTRY_USER: dockerHub_user
+#  REGISTRY_PASS: dockerHub_password
+  IMAGE_NAME: ronaldlepape/dsti-devops-project
+  IMAGE_TAG: myapp-1.0.0
 
 test_app:
   stage: test
   image: node:20
+  before_script:
+    - cd UserApi/app
   services:
     - name: postgres:15
       alias: postgres
@@ -29,7 +25,7 @@ test_app:
     - until pg_isready -h postgres -U $POSTGRES_USER; do echo "Waiting for DB..."; sleep 1; done
     - |
       PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres -U $POSTGRES_USER -d $POSTGRES_DB -c "
-        CREATE TABLE users (
+        CREATE TABLE IF NOT EXISTS users (
           username VARCHAR(255) PRIMARY KEY,
           firstname VARCHAR(255) NOT NULL,
           lastname VARCHAR(255) NOT NULL
@@ -37,3 +33,19 @@ test_app:
       "
     - npm install
     - npm test
+
+# Here a runner will buid a Docker image : it must containt Docker CLI (=> image=docker:latest) + Docker Daemon (=> service=docker:dind)
+# Note : "dind" = "Docker In Docker"
+build_app:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - cd UserApi
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS    
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .  
+    - docker push $IMAGE_NAME:$IMAGE_TAG
