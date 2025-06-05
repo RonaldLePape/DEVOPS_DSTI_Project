@@ -4,11 +4,11 @@ stages:
 
 # Variables block below : commented variables have been created as Gitlab CI/CD variables.
 variables:
-#  POSTGRES_DB: myproject_db
-#  POSTGRES_USER: myuser
-#  POSTGRES_PASSWORD: MySecretPassword123
-#  REGISTRY_USER: dockerHub_user
-#  REGISTRY_PASS: dockerHub_password
+  POSTGRES_DB: myproject_db
+  POSTGRES_USER: myuser
+  POSTGRES_PASSWORD: MySecretPassword123
+  REGISTRY_USER: ronaldlepape
+  REGISTRY_PASS: bFt3wj7m7KZKEH7C
   IMAGE_NAME: ronaldlepape/dsti-devops-project
   IMAGE_TAG: myapp-1.0.0
 
