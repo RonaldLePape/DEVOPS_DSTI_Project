@@ -21,9 +21,9 @@ test_app:
     - name: postgres:15
       alias: postgres
   script:
-    - echo "DB: $POSTGRES_DB"
-    - echo "User: $POSTGRES_USER"
-    - echo "Pass length : ${#POSTGRES_PASSWORD}"
+    - echo "DB $POSTGRES_DB"
+    - echo "User $POSTGRES_USER"
+    - echo "Pass length ${#POSTGRES_PASSWORD}"
     - apt-get update && apt-get install -y postgresql-client
     - until pg_isready -h postgres -U $POSTGRES_USER; do echo "Waiting for DB..."; sleep 1; done
     - |
