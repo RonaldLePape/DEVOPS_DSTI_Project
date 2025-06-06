@@ -21,6 +21,10 @@ test_app:
   services:
     - name: postgres:15
       alias: postgres
+  variables:
+    POSTGRES_DB: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD      
   script:
     - echo "DB $POSTGRES_DB"
     - echo "User $POSTGRES_USER"
