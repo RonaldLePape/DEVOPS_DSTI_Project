@@ -2,17 +2,7 @@ stages:
   - test
   - build
 
-# Variables block below : commented variables have been created as Gitlab CI/CD variables.
-
-#  POSTGRES_DB: myproject_db
-#  POSTGRES_USER: myuser
-#  POSTGRES_PASSWORD: MySecretPassword123
-variables:
-  REGISTRY_USER: ronaldlepape
-  REGISTRY_PASS: bFt3wj7m7KZKEH7C
-  IMAGE_NAME: ronaldlepape/dsti-devops-project
-  IMAGE_TAG: myapp-1.0.0
-
+# Comment to add
 test_app:
   stage: test
   image: node:20
@@ -51,6 +41,10 @@ build_app:
     - docker:dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
+    REGISTRY_USER: $REGISTRY_USER
+    REGISTRY_PASS: $REGISTRY_PASS
+    IMAGE_NAME: $IMAGE_NAME
+    IMAGE_TAG: $IMAGE_TAG
   before_script:
     - cd UserApi
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS    
