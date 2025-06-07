@@ -51,6 +51,7 @@ build_app:
     - docker push $IMAGE_NAME:$IMAGE_TAG
 
 # Here a runner will deploy the new version of the app
+# Uses "rollout restart" to force K3s to deploy even if the value of $IMAGE_NAME:$IMAGE_TAG is unchanged
 deploy:
   stage: deploy
   variables:
@@ -60,6 +61,6 @@ deploy:
     - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
         sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$IMAGE_TAG --namespace=default &&
-        sudo kubectl rollout status deployment/mywebapp --namespace=default
+        sudo kubectl rollout restart deployment/mywebapp --namespace=default
       "
 
