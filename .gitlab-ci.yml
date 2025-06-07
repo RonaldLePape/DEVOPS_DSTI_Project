@@ -1,8 +1,9 @@
 stages:
   - test
   - build
+  - deploy
 
-# Comment to add
+# Testing tha app
 test_app:
   stage: test
   image: node:20
@@ -16,9 +17,6 @@ test_app:
     POSTGRES_USER: $POSTGRES_USER
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD      
   script:
-    - echo "DB $POSTGRES_DB"
-    - echo "User $POSTGRES_USER"
-    - echo "Pass length ${#POSTGRES_PASSWORD}"
     - apt-get update && apt-get install -y postgresql-client
     - until pg_isready -h postgres -U $POSTGRES_USER; do echo "Waiting for DB..."; sleep 1; done
     - |
@@ -51,3 +49,13 @@ build_app:
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .  
     - docker push $IMAGE_NAME:$IMAGE_TAG
+
+# Here a runner will deploy the new version of the app
+deploy:
+  stage: deploy
+  script:
+    - ssh -o StrictHostKeyChecking=no-i $SSH_KEY ubuntu@www.ronaldlepape.fr "
+        kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$IMAGE_TAG --namespace=default &&
+        kubectl rollout status deployment/mywebapp --namespace=default
+     "
+
