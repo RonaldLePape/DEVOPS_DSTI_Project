@@ -57,6 +57,7 @@ deploy:
     IMAGE_NAME: $IMAGE_NAME
     IMAGE_TAG: $IMAGE_TAG
   script:
+    - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
         kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$IMAGE_TAG --namespace=default &&
         kubectl rollout status deployment/mywebapp --namespace=default
