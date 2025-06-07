@@ -53,8 +53,11 @@ build_app:
 # Here a runner will deploy the new version of the app
 deploy:
   stage: deploy
+  variables:
+    IMAGE_NAME: $IMAGE_NAME
+    IMAGE_TAG: $IMAGE_TAG
   script:
-    - ssh -o StrictHostKeyChecking=no-i $SSH_KEY ubuntu@www.ronaldlepape.fr "
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
         kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$IMAGE_TAG --namespace=default &&
         kubectl rollout status deployment/mywebapp --namespace=default
      "
