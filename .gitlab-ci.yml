@@ -56,7 +56,8 @@ build_app:
     - echo "VERSION=$VERSION"
 
     # Build and push
-    - docker build --no-cache -t $IMAGE_NAME:$VERSION .
+    - TAG="myapp-$VERSION"
+    - docker build --no-cache -t "$IMAGE_NAME:$TAG" .
     - docker push $IMAGE_NAME:$VERSION
 
 # ============================
@@ -65,10 +66,12 @@ build_app:
 deploy:
   stage: deploy
   variables:
-    IMAGE_NAME: $IMAGE_NAME  
+    IMAGE_NAME: $IMAGE_NAME
+  before_script:
+    - cd UserApi  
   script:
     # Extract version from index.js
-    - VVERSION=$(grep appversion app/src/index.js | cut -d'"' -f2)
+    - VERSION=$(grep appversion app/src/index.js | cut -d'"' -f2)
     
     - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
