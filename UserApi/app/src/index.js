@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Hello World from AWS hope!'))
+app.get('/', (req, res) => res.send('Docker Compose test 2'))
 
 app.use('/user', userRouter)
 

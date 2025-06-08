@@ -10,7 +10,7 @@
 #       => Installs Docker
 #       => Installs Docker Compose
 #       => Copies app in /home/userapi
-#       => Replaces database server name 'postgres' by 'localhost' in default.json and dbClient.js
+#       => Replaces database server name 'postgres' by 'localhost' in /home/userapi/default.json and /home/userapi/dbClient.js
 #          ('postgres' name is for use in Docker container)
 #       => Creates 3 scripts for local app execution: myapp-start, myapp-stop, myapp-test
 #       => Launches Docker Compose : creates 2 containers (1 for app/Node, 1 for Postgres)
