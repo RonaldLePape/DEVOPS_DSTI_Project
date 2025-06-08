@@ -57,8 +57,9 @@ build_app:
 
     # Build and push
     - TAG="myapp-$VERSION"
+    - echo "Building Docker image with tag $IMAGE_NAME:$TAG"
     - docker build --no-cache -t "$IMAGE_NAME:$TAG" .
-    - docker push $IMAGE_NAME:$VERSION
+    - docker push "$IMAGE_NAME:$TAG"
 
 # ============================
 # Deploy to K8s
