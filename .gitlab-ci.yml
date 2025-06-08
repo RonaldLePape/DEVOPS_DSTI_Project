@@ -51,7 +51,7 @@ build_app:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   script:
     # Extract version from index.js
-    - VERSION=$(tr -d '\r' < app/src/index.js | sed -n 's/^[[:space:]]*const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p')
+    - VERSION=$(grep version app/src/index.js | cut -d'"' -f2)
 
     - echo "VERSION=$VERSION"
 
@@ -68,7 +68,7 @@ deploy:
     IMAGE_NAME: $IMAGE_NAME  
   script:
     # Extract version from index.js
-    - VERSION=$(tr -d '\r' < app/src/index.js | sed -n 's/^[[:space:]]*const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p')
+    - VERSION=$(grep version app/src/index.js | cut -d'"' -f2)
     
     - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
