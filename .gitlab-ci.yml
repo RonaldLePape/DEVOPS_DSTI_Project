@@ -52,17 +52,15 @@ build_app:
   script:
     # Extract version from index.js
     - VERSION=$(grep appversion app/src/index.js | cut -d'"' -f2)
-
-    - echo "VERSION=$VERSION"
-
-    # Build and push
     - TAG="myapp-$VERSION"
+
+    # Building and pushing image to Docker Hub
     - echo "Building Docker image with tag $IMAGE_NAME:$TAG"
     - docker build --no-cache -t "$IMAGE_NAME:$TAG" .
     - docker push "$IMAGE_NAME:$TAG"
 
 # ============================
-# Deploy to K8s
+# Deploy to K3s
 # ============================
 deploy:
   stage: deploy
@@ -73,10 +71,14 @@ deploy:
   script:
     # Extract version from index.js
     - VERSION=$(grep appversion app/src/index.js | cut -d'"' -f2)
+    - TAG="myapp-$VERSION"
     
+    # Deploying Docker image in K3s
+    - echo "Deploying Docker image with tag $IMAGE_NAME:$TAG"
     - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
         sudo crictl rmi $IMAGE_NAME:$VERSION || true &&
         sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$VERSION --namespace=default &&
         sudo kubectl rollout restart deployment/mywebapp --namespace=default
       "
+      
