@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Hello World from AWS!!'))
+app.get('/', (req, res) => res.send('Hello World from AWS hope'))
 
 app.use('/user', userRouter)
 
