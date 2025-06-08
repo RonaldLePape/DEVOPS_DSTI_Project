@@ -51,7 +51,7 @@ build_app:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   script:
     # Extract version from index.js
-    - VERSION=$(sed -n 's/^const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p' app/src/index.js)
+    - VERSION=$(sed -n 's/^[[:space:]]*const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p' app/src/index.js)
 
 
     - echo "VERSION=$VERSION"
@@ -69,7 +69,7 @@ deploy:
     IMAGE_NAME: $IMAGE_NAME  
   script:
     # Extract version from index.js
-    - VERSION=$(sed -n 's/^const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p' app/src/index.js)
+    - VERSION=$(sed -n 's/^[[:space:]]*const version *= *"\([0-9]\+\.[0-9]\+\.[0-9]\+\)".*/\1/p' app/src/index.js)
 
 
     
