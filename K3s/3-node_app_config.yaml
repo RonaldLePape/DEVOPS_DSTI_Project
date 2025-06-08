@@ -17,6 +17,7 @@ spec:
       containers:
         - name: mywebapp
           image: ronaldlepape/dsti-devops-project:myapp-1.0.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
       imagePullSecrets:
