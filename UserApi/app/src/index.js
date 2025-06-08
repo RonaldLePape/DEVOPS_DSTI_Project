@@ -1,3 +1,7 @@
+// Application version, used in CI/CD pipeline
+const appversion = "1.0.0"
+
+
 const express = require('express')
 const userRouter = require('./routes/user')
 const bodyParser = require('body-parser')
