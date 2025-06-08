@@ -65,7 +65,7 @@ deploy:
   script:
     - chmod 600 "$SSH_KEY"
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
-        sudo crictl rmi $IMAGE_NAME:$IMAGE_TAG || true
+        sudo crictl rmi $IMAGE_NAME:$IMAGE_TAG || true &&
         sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$IMAGE_TAG --namespace=default &&
         sudo kubectl rollout restart deployment/mywebapp --namespace=default
       "
