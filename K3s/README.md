@@ -14,10 +14,45 @@ K3s is a lightweight version of K8s
 
 ## Declare Docker Hub credentials in K3S to access private repo:
 
-  kubectl create secret docker-registry regcred \
-    --docker-username=ronaldlepape \
-    --docker-password=************************* \
-    --docker-email=ronald.lepape@gmail.com
+  - Using a YAML file:
+
+        apiVersion: v1
+        data:
+          .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4.......
+        kind: Secret
+        metadata:
+          name: regcred
+        type: kubernetes.io/dockerconfigjson
+
+
+    Note: .dockerconfigjson: is a Base64 encoded json file for Docker:
+
+        {
+          "auths": {
+            "https://index.docker.io/v1/": {
+              "username": "ronaldlepape",
+              "password": "****************",
+              "email": "ronald.lepape@gmail.com",
+              "auth": "xxxxxxxxxxxxxxxxxxxxxxxxxxxx="  # login:password base64 encoded
+            }
+          }
+        }
+
+
+  - Creating a secret can be done imperatively:
+
+      kubectl create secret docker-registry regcred \
+        --docker-username=ronaldlepape \
+        --docker-password=************************* \
+        --docker-email=ronald.lepape@gmail.com
+
+  - Handy:the previous command line can be use to output secret's YAML file :
+
+      kubectl create secret docker-registry regcred \
+        --docker-username=ronaldlepape \
+        --docker-password=************************* \
+        --docker-email=ronald.lepape@gmail.com  -o yaml
+        
 
 ## K3s configuration : Apply Yaml files
 
