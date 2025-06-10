@@ -13,13 +13,6 @@ spec:
           name: postgres-secret      
       ports:
         - containerPort: 5432
-      #env:
-      #  - name: POSTGRES_USER
-      #    value: "myuser"
-      #  - name: POSTGRES_PASSWORD
-      #    value: "MySecretPassword123"
-      #  - name: POSTGRES_DB
-      #    value: "myproject_db"
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-storage
