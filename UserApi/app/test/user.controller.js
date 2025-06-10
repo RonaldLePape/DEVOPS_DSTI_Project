@@ -6,7 +6,12 @@ describe('User', () => {
   
     describe('Delete', () => {
     it('deletes the test user "sergkudinov" if it exists', (done) => {
-      userController.delete('sergkudinov', (err, result) => {
+
+      const user = {
+        username: 'sergkudinov',
+      }
+
+      userController.delete(user, (err, result) => {
         try {
           // If the user was not found, result will be undefined or null
           if (err && err.message !== 'User not found') {

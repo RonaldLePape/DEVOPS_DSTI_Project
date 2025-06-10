@@ -6,6 +6,24 @@ const express = require('express')
 const userRouter = require('./routes/user')
 const bodyParser = require('body-parser')
 
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+// Swagger definition
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'DSTI Devops project',
+      version: '1.0.0',
+      description: 'API documentation',
+    },
+  },
+  apis: ['./src/routes/*.js'], // Path to your route files
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -13,6 +31,9 @@ const db = require('./dbClient')
 db.on("error", (err) => {
   console.error(err)
 })
+
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(bodyParser.urlencoded({
   extended: false
