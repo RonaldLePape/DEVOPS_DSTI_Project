@@ -39,9 +39,9 @@ test_app:
     - npm install
     - npm test
 
-# ============================
+# =============================
 # Build the Docker image
-# ============================
+# =============================
 build_app:
   stage: build
   image: docker:latest
