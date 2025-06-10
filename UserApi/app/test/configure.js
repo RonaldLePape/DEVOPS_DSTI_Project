@@ -18,7 +18,7 @@ describe('Configure', () => {
     const config = configure(config_custom);
     expect(config).to.eql({
       postgres: {
-      host: "localhost",
+      host: "postgres",
         port: 5432,
         user: "myuser",
         password: "MySecretPassword123",
