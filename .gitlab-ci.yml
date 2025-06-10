@@ -1,3 +1,9 @@
+#=================================================================================
+#             GitLab CI/CD Pipeline
+#     ---------------------------------------
+#  Stages: Test -> Build (master branch only) -> Deploy (idem)
+#
+#=================================================================================
 stages:
   - test
   - build
@@ -58,6 +64,11 @@ build_app:
     - echo "Building Docker image with tag $IMAGE_NAME:$TAG"
     - docker build --no-cache -t "$IMAGE_NAME:$TAG" .
     - docker push "$IMAGE_NAME:$TAG"
+  # build stage occurs only for pushes in master branch
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+    - when: never
 
 # ============================
 # Deploy to K3s
@@ -79,5 +90,10 @@ deploy:
     - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
         sudo crictl rmi $IMAGE_NAME:$TAG|| true &&
         sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$TAG --namespace=default &&
-        sudo kubectl rollout restart deployment/mywebapp --namespace=default
-      "
+        sudo kubectl rollout restart deployment/mywebapp --namespace=default"
+
+  # deploy stage occurs only for pushes in master branch
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: always
+    - when: never

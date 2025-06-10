@@ -8,15 +8,18 @@ spec:
   containers:
     - name: postgres
       image: ronaldlepape/dsti-devops-project:postgres-1.0.0
+      envFrom:
+        - secretRef:
+          name: postgres-secret      
       ports:
         - containerPort: 5432
-      env:
-        - name: POSTGRES_USER
-          value: "myuser"
-        - name: POSTGRES_PASSWORD
-          value: "MySecretPassword123"
-        - name: POSTGRES_DB
-          value: "myproject_db"
+      #env:
+      #  - name: POSTGRES_USER
+      #    value: "myuser"
+      #  - name: POSTGRES_PASSWORD
+      #    value: "MySecretPassword123"
+      #  - name: POSTGRES_DB
+      #    value: "myproject_db"
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-storage
