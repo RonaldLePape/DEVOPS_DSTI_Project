@@ -5,7 +5,7 @@ const config = configure();
 
 // Setup PostgreSQL connection pool
 const db = new Pool({
-  host: config.localhost?.host || 'localhost',
+  host: config.localhost?.host || 'postgres',
   port: config.localhost?.port || 5432,
   user: config.localhost?.user || 'myuser',
   password: config.localhost?.password || 'MySecretPassword123',
