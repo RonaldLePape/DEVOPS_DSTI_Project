@@ -5,11 +5,11 @@ const config = configure();
 
 // Setup PostgreSQL connection pool
 const db = new Pool({
-  host: config.postgres?.host || 'postgres',
-  port: config.postgres?.port || 5432,
-  user: config.postgres?.user || 'myuser',
-  password: config.postgres?.password || 'MySecretPassword123',
-  database: config.postgres?.database || 'myproject_db'
+  host: config.localhost?.host || 'postgres',
+  port: config.localhost?.port || 5432,
+  user: config.localhost?.user || 'myuser',
+  password: config.localhost?.password || 'MySecretPassword123',
+  database: config.localhost?.database || 'myproject_db'
 });
 
 // Handle graceful shutdown

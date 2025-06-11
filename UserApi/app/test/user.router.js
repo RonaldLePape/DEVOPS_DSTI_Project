@@ -17,7 +17,12 @@ describe('User REST API', () => {
      */
     describe('Delete', () => {
     it('deletes the test user "sergkudinov" if it already exists', (done) => {
-      userController.delete('sergkudinov', (err, result) => {
+
+      const user = {
+        username: 'sergkudinov',
+      }
+
+      userController.delete(user, (err, result) => {
         try {
           // If the user was not found, result will be undefined or null
           if (err && err.message !== 'User not found') {
@@ -41,7 +46,7 @@ describe('User REST API', () => {
     });
   });
 
-  describe('POST /user', () => {
+  describe('POST /user/addUser', () => {
 
     it('creates a new test user "sergkudinov"', () => {
   	const user = {
@@ -51,7 +56,7 @@ describe('User REST API', () => {
   	};
 
   	return chai.request(app)
-    	.post('/user')
+    	.post('/user/addUser')
     	.send(user)
     	.then((res) => {
       	//console.log('Result:', res.body);
@@ -74,7 +79,7 @@ describe('User REST API', () => {
         lastname: 'Kudinov'
       }
       chai.request(app)
-        .post('/user')
+        .post('/user/addUser')
         .send(user)
         .then((res) => {
           chai.expect(res).to.have.status(400)
@@ -88,7 +93,7 @@ describe('User REST API', () => {
     })
   })
 
-  describe('GET /user', () => {
+  describe('GET /user/getUser', () => {
     
     it('gets an existing test user "sergkudinov"', (done) => {
       const user = {
@@ -103,7 +108,7 @@ describe('User REST API', () => {
 
 	// Get the user
         chai.request(app)
-          .get('/user/' + user.username)
+          .get('/user/getUser/' + user.username)
           .then((res) => {
             chai.expect(res).to.have.status(200)
             chai.expect(res.body.status).to.equal('success')
@@ -118,7 +123,7 @@ describe('User REST API', () => {
     
     it('can not get a user when it does not exis', (done) => {
       chai.request(app)
-        .get('/user/invalid')
+        .get('/user/getUser/invalid')
         .then((res) => {
           chai.expect(res).to.have.status(400)
           chai.expect(res.body.status).to.equal('error')
