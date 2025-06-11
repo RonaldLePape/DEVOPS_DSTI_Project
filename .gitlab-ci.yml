@@ -80,20 +80,23 @@ deploy:
   before_script:
     - cd UserApi  
   script:
-    # Extract version from index.js
     - VERSION=$(grep appversion app/src/index.js | cut -d'"' -f2)
     - TAG="myapp-$VERSION"
-    
-    # Deploying Docker image in K3s
     - echo "Deploying Docker image with tag $IMAGE_NAME:$TAG"
     - chmod 600 "$SSH_KEY"
-    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
-        sudo crictl rmi $IMAGE_NAME:$TAG|| true &&
+    - >
+      ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@www.ronaldlepape.fr "
+        # Delete all images with the same prefix
+        sudo crictl images | grep '$IMAGE_NAME' | awk '{print \$3}' | while read -r ID; do
+          echo Deleting image \$ID;
+          sudo crictl rmi \$ID || true;
+        done &&
+        # Deploy new image
         sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$TAG --namespace=default &&
-        sudo kubectl rollout restart deployment/mywebapp --namespace=default"
-
-  # deploy stage occurs only for pushes in master branch
+        sudo kubectl rollout restart deployment/mywebapp --namespace=default
+      "
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       when: always
     - when: never
+
