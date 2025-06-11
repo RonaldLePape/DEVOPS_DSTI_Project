@@ -15,7 +15,7 @@ const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'DSTI Devops project',
-      version: '1.0.0',
+      version: appversion,
       description: 'API documentation',
     },
   },
