@@ -10,3 +10,7 @@
 
  - Adding 3 API methods : delete, getAll, update
  - Adding Swagger page
+
+## v1.2.0
+
+- Adding a landing page that uses API methods. 

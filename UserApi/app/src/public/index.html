@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User API Landing Page</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    button { margin: 0.5rem;background-color: #799ec7;color: rgb(37, 31, 31);font-size: 1em;}
+    input { background-color: #D3D3D3; }
+    h2 {color: rgb(25, 80, 128);font-size: 1.2rem;}
+    .section { margin-bottom: 1.5rem; }
+    pre { background-color: #333; color: white; padding: 1rem; border-radius: 4px; }
+  </style>
+</head>
+<body style="background-color: rgb(173, 216, 230);">
+  <h1 style="color: rgb(0, 53, 100);">Welcome to my DSTI DevOps project's landing page !</h1>
+  <hr>
+  <br>
+  <p>
+    <strong>API documentation: </strong>
+    <a href="/api-docs"><b>&#x21E8; Swagger</b></a>
+  </p>
+  <br>
+  <hr>
+  <div class="section">
+    <h2>Get All Users</h2>
+    <button onclick="getAllUsers()">Get All</button>
+  </div>
+
+  <div class="section">
+    <h2>Create User</h2>
+    <input id="create-username" placeholder="Username">
+    <input id="create-firstname" placeholder="First Name">
+    <input id="create-lastname" placeholder="Last Name">
+    <button onclick="createUser()">Create</button>
+  </div>
+
+  <div class="section">
+    <h2>Get User by Username</h2>
+    <input id="get-username" placeholder="Username">
+    <button onclick="getUser()">Get</button>
+  </div>
+
+  <div class="section">
+    <h2>Update User</h2>
+    <input id="update-username" placeholder="Username">
+    <input id="update-firstname" placeholder="New First Name">
+    <input id="update-lastname" placeholder="New Last Name">
+    <button onclick="updateUser()">Update</button>
+  </div>
+
+  <div class="section">
+    <h2>Delete User</h2>
+    <input id="delete-username" placeholder="Username">
+    <button onclick="deleteUser()">Delete</button>
+  </div>
+
+  <h3>Response:</h3>
+  <pre id="response"></pre>
+
+  <script>
+    const api = '/user';
+
+    async function showResponse(res) {
+      const json = await res.json();
+      document.getElementById('response').textContent = JSON.stringify(json, null, 2);
+    }
+
+    function getValue(id) {
+      return document.getElementById(id).value;
+    }
+
+    function createUser() {
+      fetch(`${api}/addUser`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: getValue('create-username'),
+          firstname: getValue('create-firstname'),
+          lastname: getValue('create-lastname')
+        })
+      }).then(showResponse);
+    }
+
+    function getUser() {
+      fetch(`${api}/getUser/${getValue('get-username')}`)
+        .then(showResponse);
+    }
+
+    function getAllUsers() {
+      fetch(`${api}/getAll`)
+        .then(showResponse);
+    }
+
+    function updateUser() {
+      fetch(`${api}/updateUser`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: getValue('update-username'),
+          firstname: getValue('update-firstname'),
+          lastname: getValue('update-lastname')
+        })
+      }).then(showResponse);
+    }
+
+    function deleteUser() {
+      fetch(`${api}/deleteUser`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: getValue('delete-username') })
+      }).then(showResponse);
+    }
+  </script>
+</body>
+</html>

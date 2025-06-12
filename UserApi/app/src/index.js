@@ -1,10 +1,11 @@
 // Application version, used in CI/CD pipeline
-const appversion = "1.1.0"
+const appversion = "1.2.0"
 
 
 const express = require('express')
 const userRouter = require('./routes/user')
 const bodyParser = require('body-parser')
+const path = require('path') // for resolving paths
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -15,7 +16,7 @@ const swaggerOptions = {
     openapi: '3.0.0',
     info: {
       title: 'DSTI Devops project',
-      version: appversion,
+      version: '1.1.0',
       description: 'API documentation',
     },
   },
@@ -33,14 +34,27 @@ db.on("error", (err) => {
 })
 
 // Serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: `
+      body {
+        background-color:rgb(228, 236, 229); /* light blue or any color you like */
+      }
+    `
+  })
+);
 
 app.use(bodyParser.urlencoded({
   extended: false
 }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Hello from AWS !!!!'))
+// Serve static files from the 'public' folder
+app.use(express.static(path.join(__dirname, 'public')))
+
+//app.get('/', (req, res) => res.send('Hello from AWS !!!!'))
 
 app.use('/user', userRouter)
 
