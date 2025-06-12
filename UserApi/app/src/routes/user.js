@@ -7,6 +7,8 @@ const userRouter = express.Router()
  * @swagger
  * /user/addUser:
  *   post:
+ *     tags:
+ *       - Business
  *     summary: Create a new user
  *     requestBody:
  *       required: true
@@ -54,6 +56,8 @@ userRouter.post('/addUser/', (req, resp) => {
  * @swagger
  * /user/getUser/{username}:
  *   get:
+ *     tags:
+ *       - Business
  *     summary: Retrieve a user by username
  *     parameters:
  *       - in: path
@@ -102,6 +106,8 @@ userRouter.get('/getUser/:username', (req, resp, next) => { // Express URL param
  * @swagger
  * /user/getAll:
  *   get:
+ *     tags:
+ *       - Business
  *     summary: Retrieve all the users
  *     responses:
  *       200:
@@ -146,6 +152,8 @@ userRouter.get('/getAll', (req, resp, next) => {
  * @swagger
  * /user/deleteUser:
  *   post:
+ *     tags:
+ *       - Business
  *     summary: Delete a user
  *     requestBody:
  *       required: true
@@ -187,6 +195,8 @@ userRouter.post('/deleteUser/', (req, resp) => {
  * @swagger
  * /user/updateUser:
  *   post:
+ *     tags:
+ *       - Business
  *     summary: Update a user
  *     requestBody:
  *       required: true
@@ -228,7 +238,5 @@ userRouter.post('/updateUser/', (req, resp) => {
       resp.status(201).json(respObj)
     })
   })
-
-
 
 module.exports = userRouter
