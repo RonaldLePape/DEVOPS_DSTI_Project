@@ -4,63 +4,105 @@
   <title>User API Landing Page</title>
   <meta charset="UTF-8">
   <style>
+
     body { font-family: sans-serif; margin: 2rem; }
-    button { margin: 0.5rem;background-color: #799ec7;color: rgb(37, 31, 31);font-size: 1em;}
-    input { background-color: #D3D3D3; }
-    h2 {color: rgb(25, 80, 128);font-size: 1.2rem;}
+    
     .section { margin-bottom: 1.5rem; }
-    pre { background-color: #333; color: white; padding: 1rem; border-radius: 4px; }
+  
+    .container {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .left, .right {
+      flex: 1;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    input, button {
+      margin: 0.5rem;background-color: #799ec7;color: rgb(37, 31, 31);font-size: 1em;
+    }
+
+    input {
+      background-color: #D3D3D3;
+    }
+
+    pre {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap;
+    }
+    h2 {color: rgb(25, 80, 128);font-size: 1.2rem;}
+    h2, h3 {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body style="background-color: rgb(173, 216, 230);">
-  <h1 style="color: rgb(0, 53, 100);">Welcome to my DSTI DevOps project's landing page !</h1>
-  <hr>
+  <h1 style="color: rgb(0, 53, 100);text-align: center;">Welcome to my DSTI DevOps project's landing page !</h1>
   <br>
-  <p>
-    <strong>API documentation: </strong>
-    <a href="/api-docs"><b>&#x21E8; Swagger</b></a>
-  </p>
-  <br>
-  <hr>
-  <div class="section">
-    <h2>Get All Users</h2>
-    <button onclick="getAllUsers()">Get All</button>
-  </div>
+  <div class="container">
+    <div class="left">
+      <div class="section">
+        <h2>API documentation:</h2>
+        <p><a href="/api-docs"><b>&#x21E8; Swagger</b></a></p>
+      </div>
+      
+      <div class="section">
+        <h2>Health check</h2>
+        <button onclick="getHealth()">Check</button>
+      </div>
+	  <hr style="height: 4px; background-color: rgb(44, 44, 44); border: none;">
 
-  <div class="section">
-    <h2>Create User</h2>
-    <input id="create-username" placeholder="Username">
-    <input id="create-firstname" placeholder="First Name">
-    <input id="create-lastname" placeholder="Last Name">
-    <button onclick="createUser()">Create</button>
-  </div>
 
-  <div class="section">
-    <h2>Get User by Username</h2>
-    <input id="get-username" placeholder="Username">
-    <button onclick="getUser()">Get</button>
-  </div>
+      <div class="section">
+        <h2>Get All Users</h2>
+        <button onclick="getAllUsers()">Get All</button>
+      </div>
 
-  <div class="section">
-    <h2>Update User</h2>
-    <input id="update-username" placeholder="Username">
-    <input id="update-firstname" placeholder="New First Name">
-    <input id="update-lastname" placeholder="New Last Name">
-    <button onclick="updateUser()">Update</button>
-  </div>
+      <div class="section">
+        <h2>Create User</h2>
+        <input id="create-username" placeholder="Username">
+        <input id="create-firstname" placeholder="First Name">
+        <input id="create-lastname" placeholder="Last Name">
+        <button onclick="createUser()">Create</button>
+      </div>
 
-  <div class="section">
-    <h2>Delete User</h2>
-    <input id="delete-username" placeholder="Username">
-    <button onclick="deleteUser()">Delete</button>
-  </div>
+      <div class="section">
+        <h2>Get User</h2>
+        <input id="get-username" placeholder="Username">
+        <button onclick="getUser()">Get</button>
+      </div>
 
-  <hr>
-  <h3>Response:</h3>
-  <pre id="response"></pre>
+      <div class="section">
+        <h2>Update User</h2>
+        <input id="update-username" placeholder="Username">
+        <input id="update-firstname" placeholder="New First Name">
+        <input id="update-lastname" placeholder="New Last Name">
+        <button onclick="updateUser()">Update</button>
+      </div>
+
+      <div class="section">
+        <h2>Delete User</h2>
+        <input id="delete-username" placeholder="Username">
+        <button onclick="deleteUser()">Delete</button>
+      </div>
+    </div>
+
+    <div class="right">
+      <h2>Response:</h2>
+      <pre id="response"></pre>
+    </div>
+  </div>
 
   <script>
     const api = '/user';
+    const healthapi = '/health';
 
     async function showResponse(res) {
       const json = await res.json();
@@ -112,6 +154,12 @@
         body: JSON.stringify({ username: getValue('delete-username') })
       }).then(showResponse);
     }
+
+    function getHealth() {
+      fetch(`${healthapi}/healthcheck`)
+        .then(showResponse);
+    }
+
   </script>
 </body>
 </html>

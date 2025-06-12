@@ -1,9 +1,10 @@
 // Application version, used in CI/CD pipeline
-const appversion = "1.2.0"
+const appversion = "1.3.0"
 
 
 const express = require('express')
 const userRouter = require('./routes/user')
+const healthRouter = require('./routes/health');
 const bodyParser = require('body-parser')
 const path = require('path') // for resolving paths
 
@@ -57,6 +58,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 //app.get('/', (req, res) => res.send('Hello from AWS !!!!'))
 
 app.use('/user', userRouter)
+app.use('/health', healthRouter)
+
 
 const server = app.listen(port, (err) => {
   if (err) throw err
