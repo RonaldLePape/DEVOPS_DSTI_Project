@@ -68,6 +68,8 @@ K3s is a lightweight version of K8s
   kubectl get pv
   kubectl get services
   kubectl get deployments
+  sudo crictl images
+  
 
 ## Describe (get errors):
   kubectl describe pod pod_name

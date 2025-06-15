@@ -56,6 +56,6 @@
     kubectl get svc -n istio-system prometheus
 
   Exposing Prometheus via a Service Nodeport:
-    kubectl apply -f prometheus-nodeport.yaml
+    kubectl apply -f prometheus-nodeport.yaml   (file in K3s folder)
 
 

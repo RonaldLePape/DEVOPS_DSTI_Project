@@ -18,3 +18,7 @@
 ## v1.3.0
 
 - Adding Healthcheck() method to API 
+
+## v1.4.0
+
+- Adding link to Prometheus
