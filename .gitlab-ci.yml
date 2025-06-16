@@ -91,9 +91,12 @@ deploy:
           echo Deleting image \$ID;
           sudo crictl rmi \$ID || true;
         done &&
-        # Deploy new image
-        sudo kubectl set image deployment/mywebapp mywebapp=$IMAGE_NAME:$TAG --namespace=default &&
-        sudo kubectl rollout restart deployment/mywebapp --namespace=default
+        # Set new image for mywebapp v1 and mywebapp v2 (will be the same in our case)
+        sudo kubectl set image deployment/mywebapp-v1 mywebapp=$IMAGE_NAME:$TAG --namespace=default &&
+        sudo kubectl set image deployment/mywebapp-v2 mywebapp=$IMAGE_NAME:$TAG --namespace=default &&
+        # Deploying
+        sudo kubectl rollout restart deployment/mywebapp-v1 --namespace=default &&
+        sudo kubectl rollout restart deployment/mywebapp-v2 --namespace=default
       "
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
