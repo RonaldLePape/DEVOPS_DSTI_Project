@@ -21,7 +21,7 @@ The goal of this project is to create a CI/CI pipeline, using several Devops too
 
 - a standardized Ubuntu server id provided to developpers as a Virtaul Machine, using Vagrant+Ansible. The developper uses Git to push new versions in GitLab, which triggers the pipeline.
 - a copy of this repo is created in [GitLab] in order to use GitLab Actions for the CI/CD pipeline. Three stages are implemented: Test, Build and Deploy. 
-- the application is deployed in AWS in a EC2 instance running a lightweight version of Kubernetes (K3s), and Nginx (+ Certbot) as a reverse Proxy. For observability and monitoring, Prometheus and Grafana are also deployed. Both can be accessed via the application's landing page.
+- the application is deployed in AWS in a EC2 instance running a lightweight version of Kubernetes (K3s), and Nginx (+ Certbot) as a reverse Proxy. For observability and monitoring, Prometheus and Grafana are also deployed. Both can be accessed via the application's landing page. The build stage creates a Docker image which is uploaded to Docker Hub. The image tag is taken from the constant "appversion" at the begining of index.js file.
 
 
 List of DevOps tools:
@@ -40,8 +40,23 @@ List of DevOps tools:
 
 ## Documentation:
 
-Specific README file can be found in each project's subdirectory
+Specific README file can be found in each project's subdirectory.
 
+## Review of the project's folders:
+
+- Root folder
+- Folder IaC
+- Images
+- Istio
+- K3s
+- Nginx-Certbot
+- Postgres
+- UserApi
+
+
+<br><br>
+
+# Below are some illustrations of the project's main features 
 
 ## Landing page:
 
