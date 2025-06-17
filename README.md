@@ -80,7 +80,7 @@ A canary deployment consists of running two versions of the application (the old
 
 - Canary deployment defined at Istio level in Kubernetes's VirtualService:
 
-````
+```
   ........
   http:
   - route:
@@ -92,11 +92,21 @@ A canary deployment consists of running two versions of the application (the old
         host: mywebapp-service
         subset: v2
       weight: 10
-````
+```
 
 
 
 - Prometheus shows how traffic is distributed in a 90-10 manner during a load test:
+
+  The PromQL (PrometheusQL) request below displays how the counter "istio_requests_total" has increased during the last 5 minutes, goupr by "destination_version" (v1 or v2):
+
+  ```
+  sum by (destination_version)(
+       increase(istio_requests_total{
+       destination_app="mywebapp"
+       }[5m])
+       )
+  ```
 
 
 ![Prometheus](./Images/Canary_deployment_Prometheus.png)
