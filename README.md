@@ -37,6 +37,12 @@ List of DevOps tools:
 - Prometheus
 - Grafana
 
+
+## Documentation:
+
+Specific README file can be found in each project's subdirectory
+
+
 ## Landing page:
 
 ![Landingpage](./Images/Landing_page.png)
