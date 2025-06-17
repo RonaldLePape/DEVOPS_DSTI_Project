@@ -45,11 +45,48 @@ Specific README file can be found in each project's subdirectory
 
 ## Landing page:
 
-![Landingpage](./Images/Landing_page.png)
+![Landing Ppage](./Images/Landing_page.png)
+
+## GitLab pipeline:
+
+The pipelineand its 3 stages is described in the .gitlab-ci.yml at the root of the repository. Below is a view of 3 pipeline executions. When the project is pushed to the "master" branch, all 3 stages are run in  sequence (Test, Build, Deply). For a push to any other branch, only the Test stage is run. This ensure that test versions are not deployed in AWS.
+
+- The 3 stages are defined at the beginning of .gitlab-ci.yaml file:
+  
+```
+stages:
+  - test
+  - build
+  - deploy
+
+.... Build and Seploy stages are controlled by GitLab rule:
+
+rules:
+  - if: '$CI_COMMIT_BRANCH == "master"'
+    when: always
+  - when: never
+```
+
+- Pipeline executions:
+
+
+![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
 
 
+## Visualizing canary deployment with Prometheus:
+
+A canary deployment consists of running two versions of the application (the old one and the new one) simultaneously. Incoming connections are then distributed between the two, with only a small percentage directed to the new version. This approach ensures minimal disruption if the new version fails to meet expectations (by redirecting 100% of traffic back to the old version), or allows for a gradual increase in traffic to the new version if the deployment goes well.
+
+- Prometheus shows how traffic is distributed in a 90-10 repartition:
+
+
+![Prometheus](./Images/Canary_deployment_Prometheus.png)
 
 
 [NodeJS application]: https://www.ronaldlepape.fr
 [GitLab]: https://gitlab.com/ronaldlepape-group/DEVOPS_DSTI_Project
+
+
+
+
