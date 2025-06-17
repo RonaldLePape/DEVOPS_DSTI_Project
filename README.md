@@ -59,7 +59,7 @@ stages:
   - build
   - deploy
 
-.... Build and Seploy stages are controlled by GitLab rule:
+.... Build and Deploy stages are controlled by GitLab rule:
 
 rules:
   - if: '$CI_COMMIT_BRANCH == "master"'
@@ -78,7 +78,25 @@ rules:
 
 A canary deployment consists of running two versions of the application (the old one and the new one) simultaneously. Incoming connections are then distributed between the two, with only a small percentage directed to the new version. This approach ensures minimal disruption if the new version fails to meet expectations (by redirecting 100% of traffic back to the old version), or allows for a gradual increase in traffic to the new version if the deployment goes well.
 
-- Prometheus shows how traffic is distributed in a 90-10 repartition:
+- Canary deployment defined at Istio level in Kubernetes's VirtualService:
+
+````
+  ........
+  http:
+  - route:
+    - destination:
+        host: mywebapp-service
+        subset: v1
+      weight: 90
+    - destination:
+        host: mywebapp-service
+        subset: v2
+      weight: 10
+````
+
+
+
+- Prometheus shows how traffic is distributed in a 90-10 manner during a load test:
 
 
 ![Prometheus](./Images/Canary_deployment_Prometheus.png)
