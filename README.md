@@ -76,7 +76,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ![Landing Ppage](./Images/Landing_page.png)
 
-## Networking aspect:
+## Networking aspects:
 
 ![Networking](./Images/Network_flow.png)
 
