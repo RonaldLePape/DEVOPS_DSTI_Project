@@ -40,18 +40,32 @@ List of DevOps tools:
 
 ## Documentation:
 
-Specific README file can be found in each project's subdirectory.
+Specific README file can be found in each project's subdirectory. The application also exposes its [swagger page].
 
 ## Review of the project's folders:
 
-- Root folder
-- Folder IaC
-- Images
-- Istio
-- K3s
-- Nginx-Certbot
-- Postgres
-- UserApi
+- **Root folder:**
+  - .gitlab-ci.yml: defines the GitLab pipeline.
+  - docker-compose.yml: defines a Docker containerized deployment of the application. Used in the development Ubuntu server.
+- **IaC:**
+  - vagrantfile: defines Vagrant script for the creation of the development server.
+  - devserver-config.yml (playbooks subdir): this Ansible playbook installs a local classic version of the application (database + web), along with the containerized version (database + web).
+  - readme file: contains Istio installation instructions + useful notes.
+- **Images:**
+  - self-explanatory.
+- **Istio:**
+  - readme file: contains Istio installation instructions + useful notes.
+- **K3s:**
+  - *.yml files: they contain K3s configuration files, to be applied in alphabetical ordezr.
+  - readme file: contains Istio installation instructions + useful notes.
+- **Nginx-Certbot:**
+  - readme file: contains Istio installation instructions + useful notes.
+- **Postgres:**
+  - dockerfile: defines Docker script for the setup and creation of the Postgres database in a Docker container. Used by Docker-compose in developper's Ubuntu server.
+  - *.qql files: creation of users table and insertion of 3 users.
+- **UserApi:**
+  -  App folder: wab application code, along with its tests.
+  -  dockerfile: defines Docker script for the creation of the web application in a Docker container. Used by Docker-compose in developper's Ubuntu server.
 
 
 <br><br>
@@ -128,6 +142,7 @@ A canary deployment consists of running two versions of the application (the old
 
 
 [NodeJS application]: https://www.ronaldlepape.fr
+[swagger page]: https://www.ronaldlepape.fr/api-docs
 [GitLab]: https://gitlab.com/ronaldlepape-group/DEVOPS_DSTI_Project
 
 
