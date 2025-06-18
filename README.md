@@ -102,6 +102,14 @@ rules:
 ![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
 
+- New Docker images have been built and uploaded to Docker Hub:
+
+Application's version defined in src/index.js file:
+
+![Appversion](./Images/Appversion.png)
+
+![Docker_Hub](./Images/Docker_Hub.png)
+
 
 ## Visualizing canary deployment with Prometheus:
 
