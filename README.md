@@ -75,7 +75,8 @@ Specific README file can be found in each project's subdirectory. The applicatio
 ## Developper's environnement
 
 - Vagrant and Ansible are used to provision a virtual server on the developer's machine, replicating the exact versions of Node and Postgres used in the production environment (AWS):
-  - A shared folder allows direct modification of the application in Ubuntu from host machine:
+  - A shared folder allows direct modification of the application in Ubuntu from host machine,
+  - Docker and/or Docker compose can be used by thbe developper. Full containerized app is set up by Ansible at virtual machine creation time, with current Production version:
      
 ![Developper_env](./Images/Developper_environnement.png)
 
@@ -119,7 +120,8 @@ rules:
 ```
 
 - Pipeline executions:
-
+  - When a "git push" to master branch is done : all 3 stages are performed (Test/Build/Deploy);
+  - Otherwide only Test stage is performed:
 
 ![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
