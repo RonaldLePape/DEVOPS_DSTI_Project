@@ -72,6 +72,23 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 # Below are some illustrations of the project's main features 
 
+## DEvelopper's environnement
+
+- Vagrant and Ansible are used to provision a virtual server on the developer's machine, replicating the exact versions of Node and Postgres used in the production environment (AWS):
+
+![Developper_env](./Images/Developper_environnement.png)
+
+- Three command lines are also added to the virtual server to ease start/stop/test operations on local (non-Docker) application:
+  - **myapp-start**
+  - **myapp-stop**
+  - **myapp-test**
+ 
+- Using myapp-test:
+
+![Myapp_test](./Images/Application_test.png)
+ 
+
+
 ## Landing page:
 
 ![Landing Ppage](./Images/Landing_page.png)
