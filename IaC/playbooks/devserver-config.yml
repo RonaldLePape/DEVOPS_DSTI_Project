@@ -50,6 +50,15 @@
         name: net-tools
         state: present
 
+# Adding "postgres" in /etc/hosts for name resolution
+    - name: Replace localhost line to include postgres using replace
+      replace:
+        path: /etc/hosts
+        regexp: '^127\.0\.0\.1\s+localhost\s*$'
+        replace: '127.0.0.1       localhost postgres'
+        backup: no
+
+
 # Install Node.JS 20.x (= latest version of this major version)
 # Will be installed from Nodes's repo' instead of ubuntu apt repo (ubuntu store may be outdated)
     - name: Install Node.js 20.x
@@ -97,14 +106,14 @@
         sudo -u postgres psql -c "CREATE USER {{ db_user }} WITH PASSWORD '{{ db_password }}';"
 
 # Creating a Postgres database with an SQL command
-    - name: Manually create PostgreSQL database (if it doesn't exist)
+    - name: Manually create PostgreSQL database
       become: true
       shell: |
         sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname='{{ db_name }}'" | grep -q 1 || \
         sudo -u postgres psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};"
 
 # Executing SQL commands : creating users table, adding data rows to users
-    - name: Create PostgreSQL tables and insert users
+    - name: Create PostgreSQL tables and insert some users
       shell: |
         sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/01-init-users-table.sql && \
         sudo -u postgres psql -d myproject_db -f /home/dsti_project/Postgres/02-init-users.sql
@@ -139,36 +148,17 @@
       args:
         executable: /bin/bash
 
-# Copying UserApi to /home/userapi (where "postgres" -> "localhost" in config in next step)
 # "npm install" will create folder node_modules in a non shared folder ("npm install" fails to create symlinks on shared volumes)
 # -> Lauching "npm install" with --prefix /home/node_tmp
-    - name: Copy UserApi in /home/userapi and "npm install"
+    - name: npm install
       shell: |
         cd /home && \
         sudo mkdir node_tmp && \
-        sudo cp -r /home/dsti_project/UserApi/app/* /home/userapi  && \
         sudo cp -r /home/dsti_project/UserApi/app/package.json /home/node_tmp  && \        
         cd /home/userapi && \
         sudo npm install --prefix /home/node_tmp
       args:
         executable: /bin/bash
-
-# In the previously copied UserApi, the database server name "postgres" (OK for Docker Compose) must be changed to "localhost" (OK for non-Docker)
-# 2 files impacted:
-    - name: Find and replace "postgres" with "localhost" in default.json
-      replace:
-        path: /home/userapi/conf/default.json
-        regexp: '"host": *"postgres"'
-        replace: '"host": "localhost"'
-
-        backup: no
-
-    - name: Find and replace "postgres" with "localhost" in dbClient.js
-      replace:
-        path: /home/userapi/src/dbClient.js
-        regexp: 'postgres'
-        replace: 'localhost'
-        backup: no
 
 # In packages.json, replace the default test line:
     - name: Replace test script in package.json
@@ -176,22 +166,6 @@
         path: /home/userapi/package.json
         regexp: '"test":\s*"mocha test/\*\.js"'
         replace: '"test": "/home/node_tmp/node_modules/.bin/mocha test/*.js"'
-
-# In test/configure.js, replace the default test line:
-    - name: Replace "configure" test script
-      replace:
-        path: /home/userapi/test/configure.js
-        regexp: 'host:\s*"postgres"'
-        replace: 'host: "localhost"'
-
-# In test/dbClient.js, replace the default test line:
-    - name: Replace "dbClient" test script
-      replace:
-        path: /home/userapi/test/dbClient.js
-        regexp: "host:\\s*config\\.postgres\\?\\..*?\\|\\|\\s*'postgres'"
-        replace: "host: config.postgres?.host || 'localhost'"
-
-
 
 
 # Creating a "myapp-start" script to start the app easily :-)

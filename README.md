@@ -1,4 +1,4 @@
-# Ronald's DEVOPS project for DSTI
+# DEVOPS project for DSTI
 
 ### Implementing DevOps technologies, methodologies and philosophy
 

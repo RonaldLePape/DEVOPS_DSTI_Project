@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "build": "echo 'No build needed'",
-    "test": "mocha test/*.js"
+    "test": "/home/node_tmp/node_modules/.bin/mocha test/*.js"
   },
   "author": "Ronald Le Pape",
   "license": "",
