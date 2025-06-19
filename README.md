@@ -95,7 +95,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ![Landing Ppage](./Images/Landing_page.png)
 
-## Kubernets and Istio networking layers:
+## Kubernetes and Istio networking layers:
 
 ![Networking](./Images/Network_flow.png)
 
