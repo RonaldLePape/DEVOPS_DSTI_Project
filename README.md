@@ -95,7 +95,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ![Landing Ppage](./Images/Landing_page.png)
 
-## Networking aspects:
+## Kubernets and Istio networking layers:
 
 ![Networking](./Images/Network_flow.png)
 
@@ -121,7 +121,7 @@ rules:
 
 - Pipeline executions:
   - When a "git push" to master branch is done : all 3 stages are performed (Test/Build/Deploy);
-  - Otherwide only Test stage is performed:
+  - Otherwise only Test stage is performed:
 
 ![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
