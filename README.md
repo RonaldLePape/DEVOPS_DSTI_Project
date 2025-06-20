@@ -55,7 +55,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
   - self-explanatory.
 - **Istio:**
   - readme file: contains Istio installation instructions + useful notes.
-- **K3s:**
+- **Kubernbetes:**
   - *.yml files: they contain K3s configuration files, to be applied in alphabetical ordezr.
   - readme file: contains Istio installation instructions + useful notes.
 - **Nginx-Certbot:**
