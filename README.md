@@ -101,7 +101,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ## GitLab pipeline:
 
-The pipelineand its 3 stages is described in the .gitlab-ci.yml at the root of the repository. Below is a view of 3 pipeline executions. When the project is pushed to the "master" branch, all 3 stages are run in  sequence (Test, Build, Deply). For a push to any other branch, only the Test stage is run. This ensure that test versions are not deployed in AWS.
+The pipeline and its 3 stages are described in .gitlab-ci.yml file at the root of the repository. Below is a view of 3 pipeline executions. When the project is pushed to the "master" branch, all 3 stages are run in  sequence (Test, Build, Deply). For a push to any other branch, only the Test stage is run. This ensure that test versions are not deployed in AWS.
 
 - The 3 stages are defined at the beginning of .gitlab-ci.yaml file:
   
