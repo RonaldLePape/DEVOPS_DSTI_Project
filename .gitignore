@@ -1,0 +1,7 @@
+# Ignore VS Code and Vagrant folders inside the IaC folder
+IaC/.vscode/
+IaC/.vagrant/
+Docker_notes/
+UserApi_running/
+**/PrivateNotes.md
+K3s_notes/
