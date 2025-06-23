@@ -56,7 +56,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 - **Istio:**
   - readme file: contains Istio installation instructions + useful notes.
 - **Kubernbetes:**
-  - *.yml files: they contain K3s configuration files, to be applied in alphabetical ordezr.
+  - *.yml files: configuration files, to be applied in alphabetical ordezr.
   - readme file: contains Istio installation instructions + useful notes.
 - **Nginx-Certbot:**
   - readme file: contains Istio installation instructions + useful notes.
@@ -172,7 +172,7 @@ A canary deployment consists of running two versions of the application (the old
 
 
  - Grafana: a customized dashboard also shows Istio traffic management: 
-   (Dashboard's json file in "Istio - Prometheus - Grafana" folder) 
+   - Dashboard json file in "Istio - Prometheus - Grafana" folder 
 
 
 ![Grafana](./Images/Canary_deployment_Grafana.png)

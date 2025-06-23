@@ -22,3 +22,7 @@
 ## v1.4.0
 
 - Adding link to Prometheus
+
+## v1.5.0
+
+- Adding link to Prometheus
