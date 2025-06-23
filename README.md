@@ -19,10 +19,15 @@
 
 The goal of this project is to create a CI/CI pipeline, using several Devops tools. A [NodeJS application] exposes webservices that allow simple user management. The data are persisted in a Postgres database. 
 
-- a standardized Ubuntu server id provided to developpers as a Virtaul Machine, using Vagrant+Ansible. The developper uses Git to push new versions in GitLab, which triggers the pipeline.
-- a copy of this repo is created in [GitLab] in order to use GitLab Actions for the CI/CD pipeline. Three stages are implemented: Test, Build and Deploy. 
-- the application is deployed in AWS in a EC2 instance running a lightweight version of Kubernetes (K3s), and Nginx (+ Certbot) as a reverse Proxy. For observability and monitoring, Prometheus and Grafana are also deployed. Both can be accessed via the application's landing page. The build stage creates a Docker image which is uploaded to Docker Hub. The image tag is taken from the constant "appversion" at the begining of index.js file.
+- A standardized Ubuntu server is provided to developers as a Virtual Machine using Vagrant and Ansible. Developers use Git to push updates to GitLab, which triggers the CI/CD pipeline.
 
+- A mirror of the repository is maintained in GitLab to enable CI/CD via GitLab Pipelines, which includes three stages: Test, Build, and Deploy.
+
+- During the build stage, a Docker image is generated and pushed to Docker Hub, with the image tag derived from the appversion constant defined at the top of the index.js file.
+
+- The application is deployed on AWS using an EC2 instance running K3s (a lightweight Kubernetes distribution). Nginx (with Certbot) acts as a reverse proxy. The setup includes Istio for service mesh and traffic management, enabling canary deployment (e.g., 90% traffic to v1, 10% to v2).
+
+- For monitoring and observability, Prometheus and Grafana are deployed. Both are accessible via the application’s landing page.
 
 List of DevOps tools:
 
@@ -33,7 +38,8 @@ List of DevOps tools:
 - Docker
 - Docker Compose
 - Kubernetes
-- Nginx
+- Istio
+- Nginx & Certbot
 - Prometheus
 - Grafana
 
