@@ -113,10 +113,9 @@ stages:
 
 .... Build and Deploy stages are controlled by GitLab rule:
 
-rules:
-  - if: '$CI_COMMIT_BRANCH == "master"'
-    when: always
-  - when: never
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: on_success
 ```
 
 - Pipeline executions:
@@ -169,9 +168,14 @@ A canary deployment consists of running two versions of the application (the old
        )
   ```
 
-
 ![Prometheus](./Images/Canary_deployment_Prometheus.png)
 
+
+ - Grafana: a customized dashboard also shows Istio traffic management: 
+   (Dashboard's json file in "Istio - Prometheus - Grafana" folder) 
+
+
+![Grafana](./Images/Canary_deployment_Grafana.png)
 
 [NodeJS application]: https://www.ronaldlepape.fr
 [swagger page]: https://www.ronaldlepape.fr/api-docs
