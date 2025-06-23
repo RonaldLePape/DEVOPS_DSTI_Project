@@ -185,8 +185,9 @@ A canary deployment consists of running two versions of the application (the old
  - Grafana: a customized dashboard also shows Istio traffic management: 
    - Dashboard json file in "Istio - Prometheus - Grafana" folder 
 
+![Grafana1](./Images/Dashboard_Grafana.png)
 
-![Grafana](./Images/Canary_deployment_Grafana.png)
+![Grafana2](./Images/Canary_deployment_Grafana.png)
 
 [NodeJS application]: https://www.ronaldlepape.fr
 [swagger page]: https://www.ronaldlepape.fr/api-docs
