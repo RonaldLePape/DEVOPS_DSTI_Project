@@ -21,7 +21,7 @@ The goal of this project is to create a CI/CI pipeline, using several Devops too
 
 - A standardized Ubuntu server is provided to developers as a Virtual Machine using Vagrant and Ansible. Developers use Git to push updates to GitLab, which triggers the CI/CD pipeline.
 
-- A mirror of the repository is maintained in GitLab to enable CI/CD via GitLab Pipelines, which includes three stages: Test, Build, and Deploy.
+- A mirror of the repository is maintained in [GitLab] to enable CI/CD via GitLab Pipelines, which includes three stages: Test, Build, and Deploy.
 
 - During the build stage, a Docker image is generated and pushed to Docker Hub, with the image tag derived from the appversion constant defined at the top of the index.js file.
 
