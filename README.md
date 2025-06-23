@@ -142,7 +142,7 @@ A canary deployment consists of running two versions of the application (the old
 - Canary deployment defined at Istio level in Kubernetes's VirtualService:
 
 ```
-  ........
+  ...
   http:
   - route:
     - destination:

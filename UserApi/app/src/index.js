@@ -1,5 +1,5 @@
 // Application version, used in CI/CD pipeline
-const appversion = "1.4.0"
+const appversion = "1.5.0"
 
 
 const express = require('express')
