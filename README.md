@@ -78,7 +78,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 # Below are some illustrations of the project's main features 
 
-## Developper's environnement
+## Developper's environnement:
 
 - Vagrant and Ansible are used to provision a virtual server on the developer's machine, replicating the exact versions of Node and Postgres used in the production environment (AWS):
   - A shared folder allows direct modification of the application in Ubuntu from host machine,
@@ -95,11 +95,15 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ![Myapp_test](./Images/Application_test.png)
  
+## Overview of AWS environment:
 
+- This environment represents the CI/CD target = "Production" environment:
+
+![AWS_environment](./Images/AWS_environment.png)
 
 ## Landing page:
 
-![Landing Ppage](./Images/Landing_page.png)
+![Landing Page](./Images/Landing_page.png)
 
 ## Kubernetes and Istio networking layers:
 
@@ -186,6 +190,8 @@ A canary deployment consists of running two versions of the application (the old
    - Dashboard json file in "Istio - Prometheus - Grafana" folder 
 
 ![Grafana1](./Images/Dashboard_Grafana.png)
+
+   - When loading the app with incomin g reqquests:
 
 ![Grafana2](./Images/Canary_deployment_Grafana.png)
 
