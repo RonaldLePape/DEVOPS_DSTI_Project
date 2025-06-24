@@ -97,7 +97,8 @@ Specific README file can be found in each project's subdirectory. The applicatio
  
 ## Overview of AWS environment:
 
-- This environment represents the CI/CD target = "Production" environment:
+- This environment represents the CI/CD target = "Production" environment
+  - A canary deployment scenario is defined : 90% of traffic directed to v1, 10% to v2 
 
 ![AWS_environment](./Images/AWS_environment.png)
 
