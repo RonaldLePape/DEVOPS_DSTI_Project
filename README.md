@@ -138,8 +138,10 @@ stages:
 ```
 
 - Pipeline executions:
-  - When a "git push" to master branch is done : all 3 stages are performed (Test/Build/Deploy);
+  - When a "git push" to master branch is done : all 3 stages are performed (Test/Build/Deploy), the last one requires manbual approval:
   - Otherwise only Test stage is performed:
+
+![GitLab_manual_approval_](./Images/GitLab_manual_approval.png)
 
 ![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
