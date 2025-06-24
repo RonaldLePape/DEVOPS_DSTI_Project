@@ -67,8 +67,8 @@ build_app:
   # build stage occurs only for pushes in master branch
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
-      when: always
-    - when: never
+      when: on_success
+
 
 # ============================
 # Deploy to K3s
@@ -100,6 +100,5 @@ deploy:
       "
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
-      when: always
-    - when: never
+      when: on_success
 
