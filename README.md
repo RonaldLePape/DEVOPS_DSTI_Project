@@ -101,13 +101,21 @@ Specific README file can be found in each project's subdirectory. The applicatio
 
 ![AWS_environment](./Images/AWS_environment.png)
 
-## Landing page:
-
-![Landing Page](./Images/Landing_page.png)
-
 ## Kubernetes and Istio networking layers:
 
+- Nginx reverse proxy exposes the app as well as both Prometheus and Grafana UIs:
+
 ![Networking](./Images/Network_flow.png)
+
+## Landing page:
+
+- The page let user interact with the webservice's methods and access to monitoring tools:
+
+![Landing_page](./Images/Landing_page.png)
+
+## Swagger page:
+
+![Swagger_page](./Images/Swagger.png)
 
 ## GitLab pipeline:
 
