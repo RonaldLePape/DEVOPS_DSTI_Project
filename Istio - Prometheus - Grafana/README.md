@@ -113,7 +113,7 @@
 
   - Importing the dashboard JSON file in Grafana:
 
-    ![Import_dashboard](./Images/Import_Grafana_dashboard.png)
+    ![Import_dashboard](../Images/Import_Grafana_dashboard.png)
 
 
 

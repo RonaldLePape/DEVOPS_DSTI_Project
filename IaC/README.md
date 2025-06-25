@@ -29,8 +29,8 @@
 
   - Local app listens port 3000
   - Local Postgres listens port 5432
-  - Postgres container listens on host port 5433
   - NodeJS container listens on host port 3001
+  - Postgres container listens on host port 5433
 
 ## Good to know:
 
