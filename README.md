@@ -59,7 +59,7 @@ Specific README file can be found in each project's subdirectory. The applicatio
   - readme file: contains Istio installation instructions + useful notes.
 - **Images:**
   - self-explanatory.
-- **Istio:**
+- **Istio - Prometheus - Grafana:**
   - readme file: contains Istio installation instructions + useful notes.
 - **Kubernbetes:**
   - *.yml files: configuration files, to be applied in alphabetical ordezr.
@@ -130,11 +130,11 @@ stages:
   - build
   - deploy
 
-.... Build and Deploy stages are controlled by GitLab rule:
+.... Build and Deploy stages are controlled by GitLab rule (below for Deploy stage):
 
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
-      when: on_success
+      when: manual
 ```
 
 - Pipeline executions:
