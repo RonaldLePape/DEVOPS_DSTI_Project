@@ -1,59 +1,40 @@
-# User API web application
+# UserApi web application
 
-It is a basic NodeJS web application exposing REST API that creates and stores user parameters in [Redis database](https://redis.io/).
+It is a basic Node.js web application that exposes REST API methods, consumed by an HTML UI, and manages users. Data is persisted in a PostgreSQL database.
 
-## Functionality
 
-1. Start a web server
-2. Create a user
-2. Get a user
+## List of API methods:
 
-## Installation
+1- Healthcheck (GET)
+2- addUser (POST)
+3- getUser (GET)
+4- getAll (GET)
+5- deleteUser (POST)
+6- updateUser (POST)
 
-This application is written on NodeJS and it uses Redis database.
+## Other:
 
-1. [Install NodeJS](https://nodejs.org/en/download/)
+- Links to Prometheus and Grafana
+- Link to swagger
 
-2. [Install Redis](https://redis.io/download)
 
-3. Install application
+## Installation:
 
-Go to the root directory of the application (where `package.json` file located) and run:
+This application is written on NodeJS and it uses Postgres database. Go to the root directory of the application (where `package.json` file located) and run:
 
 ```
 npm install 
 ```
 
-## Usage
+## Starting application:
 
-1. Start a web server
+- Start a web server
 
-From the root directory of the project run:
+From the root directory of the project run:Basic 
 
 ```
 npm start
 ```
-
-It will start a web server available in your browser at http://localhost:3000.
-
-2. Create a user
-
-Send a POST (REST protocol) request using terminal:
-
-```bash
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"username":"sergkudinov","firstname":"sergei","lastname":"kudinov"}' \
-  http://localhost:3000/user
-```
-
-It will output:
-
-```
-{"status":"success","msg":"OK"}
-```
-
-Another way to test your REST API is to use [Postman](https://www.postman.com/).
 
 ## Testing
 
