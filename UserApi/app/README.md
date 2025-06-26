@@ -5,13 +5,13 @@ It is a basic Node.js web application that exposes REST API methods, consumed by
 
 ## List of API methods:
 
-- **NAME          VERB**
-- healthcheck     GET
-- addUser         POST
-- getUser         GET
-- getAll          GET
-- deleteUser      POST
-- updateUser      POST
+- **NAME          (VERB):**
+  - healthcheck     (GET)
+  - addUser         (POST)
+  - getUser         (GET)
+  - getAll          (GET)
+  - deleteUser      (POST)
+  - updateUser      (POST)
 
 
 ## Other:
