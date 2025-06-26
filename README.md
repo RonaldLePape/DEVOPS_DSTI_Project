@@ -202,7 +202,7 @@ A canary deployment consists of running two versions of the application (the old
 
 ![Grafana1](./Images/Dashboard_Grafana.png)
 
-   - When loading the app with incomin g reqquests:
+   - When loading the app with incoming requests:
 
 ![Grafana2](./Images/Canary_deployment_Grafana.png)
 
