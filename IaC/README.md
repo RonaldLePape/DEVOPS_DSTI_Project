@@ -46,4 +46,4 @@
 
 - The command terraform plan compares the desired configuration (from the .tf files) with the current state of the resources (as stored in the terraform.tfstate file and fetched from AWS), and identifies any differences:
 
-![Terraform_plan](./Images/Terraform_plan.png)
+![Terraform_plan](../Images/Terraform_plan.png)
