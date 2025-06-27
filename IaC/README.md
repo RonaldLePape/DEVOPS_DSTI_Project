@@ -1,4 +1,4 @@
-# Developper environment : Vagrant + Ansible
+# Developper environment: Vagrant + Ansible
   
   - Vagrant file defines global properties of the developper's Linux server:
     - Linux distribution: Ubuntu
@@ -39,4 +39,11 @@
     ```
     user@box$ ansible-playbook /home/dsti_project/IaC/playbooks/dev-config.yml -i localhost, -c local 
     ``` 
-  
+
+# AWS server environment: Terraform
+
+- The Terraform .tf file defines the desired configuration of four AWS resources: a VPC, a public subnet, a security group, and an EC2 instance.
+
+- The command terraform plan compares the desired configuration (from the .tf files) with the current state of the resources (as stored in the terraform.tfstate file and fetched from AWS), and identifies any differences:
+
+![Terraform_plan](./Images/Terraform_plan.png)
