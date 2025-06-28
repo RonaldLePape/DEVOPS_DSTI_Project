@@ -146,7 +146,7 @@ stages:
 ![GitLab Pipeline](./Images/GitlabCICD_actions.png)
 
 
-– Storing environment variables in GitLab CI/CD variables enhances security and enables better parameterization of the pipeline:
+- Storing environment variables in GitLab CI/CD variables enhances security and enables better parameterization of the pipeline:
 
 ![GitLab_variables](./Images/GitLab_variables.png)
 

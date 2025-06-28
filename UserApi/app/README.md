@@ -32,7 +32,7 @@ npm install
 
 - Start a web server
 
-From the root directory of the project run:Basic 
+From the root directory of the project:
 
 ```
 npm start
@@ -40,7 +40,7 @@ npm start
 
 ## Testing
 
-From the root directory of the project, run:
+From the root directory of the project:
 
 ```
 npm test
